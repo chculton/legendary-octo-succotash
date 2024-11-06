@@ -5,14 +5,18 @@ const ConstituentList = () => {
 	const [constituents, setConstituents] = useState<Constituent[]>([]);
 
 	const fetchConstituents = async () => {
-		const res = await fetch('http://localhost:5000/api/constituents');
-		if (res.status !== 200) {
-			console.error(`error getting constituents - ${res?.status}`);
-			return;
-		}
+		try {
+			const res = await fetch('http://localhost:5000/api/constituents');
+			if (res.status !== 200) {
+				console.error(`error getting constituents - ${res?.status}`);
+				return;
+			}
 
-		const data = await res.json();
-		setConstituents(data);
+			const data = await res.json();
+			setConstituents(data);
+		} catch (e) {
+			console.error(`error getting constituents - ${e}`);
+		}
 	};
 
 	useEffect(() => {
